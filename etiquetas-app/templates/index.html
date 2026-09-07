@@ -1,85 +1,90 @@
 <!doctype html>
 <html lang="es">
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Convertí tus etiquetas de ML Full a térmica 50x25mm</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Convertí tus etiquetas de ML Full a térmica 50x25mm</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
   <main class="card">
     <h1>Etiquetas ML Full &rarr; térmica 50&times;25mm</h1>
-  <p class="lead">
-  Subí el PDF de etiquetas que te da MercadoLibre Full. Te devolvemos un PDF
-  con una etiqueta por página, tamaño exacto 50&times;25mm, listo para tu
-  impresora térmica. 100% vectorial &mdash; no se pierde calidad de impresión.
-  </p>p>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <div class="error">
-  {% for message in messages %}<p>{{ message }}</p>{% endfor %}
-  </div>div>
-  {% endif %}
-  {% endwith %}
-  <form action="{{ url_for('do_convert') }}" method="post" enctype="multipart/form-data" id="convert-form">
-  <label class="dropzone" for="pdf" id="dropzone">
-  <input id="pdf" name="pdf" type="file" accept="application/pdf,.pdf" required>
-  <span id="dropzone-text">Hacé clic o arrastrá tu PDF acá</span>span>
-  </label>label>
-  <p class="hint">Formato PDF &middot; hasta 20&nbsp;MB</p>
-  <button type="submit" id="submit-btn">Convertir</button>button>
-  </form>form>
-  <p class="fineprint">No guardamos tus archivos: se procesan y se borran a la hora.</p>
-  </main>main>
-<script>
-  const MAX_BYTES = 20 * 1024 * 1024;
-  const input = document.getElementById('pdf');
-  const dropzone = document.getElementById('dropzone');
-  const text = document.getElementById('dropzone-text');
-  const form = document.getElementById('convert-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const defaultText = text.textContent;
-  function formatSize(bytes) {
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-  }
-  function showError(msg) {
-    dropzone.classList.remove('has-file');
-    dropzone.classList.add('has-error');
-    text.textContent = msg;
-  }
-  function showFile(file) {
-    dropzone.classList.remove('has-error');
-    dropzone.classList.add('has-file');
-    text.textContent = '✓ ' + file.name + ' (' + formatSize(file.size) + ')';
-  }
-  input.addEventListener('change', () => {
-    const file = input.files[0];
-    if (!file) {
-      dropzone.classList.remove('has-file', 'has-error');
-      text.textContent = defaultText;
-      return;
-    }
-    if (!file.name.toLowerCase().endsWith('.pdf')) {
-      input.value = '';
-      showError('Eso no es un PDF. Probá con el archivo que te dio MercadoLibre.');
-      return;
-    }
-    if (file.size > MAX_BYTES) {
-      input.value = '';
-      showError('El archivo pesa ' + formatSize(file.size) + ', el máximo es 20 MB.');
-      return;
-    }
-    showFile(file);
-  });
-  form.addEventListener('submit', (e) => {
-    if (!input.files[0]) return;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Convirtiendo...';
-  });
-</script>
-</body>
-</html>html>
+    <p class="lead">
+      Subí el PDF de etiquetas que te da MercadoLibre Full. Te devolvemos un PDF
+      con una etiqueta por página, tamaño exacto 50&times;25mm, listo para tu
+      impresora térmica. 100% vectorial &mdash; no se pierde calidad de impresión.
+    </p>
 
-</script></p></h1>
-</body></title>
-  </head>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error">
+          {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('do_convert') }}" method="post" enctype="multipart/form-data" id="convert-form">
+      <label class="dropzone" for="pdf" id="dropzone">
+        <input id="pdf" name="pdf" type="file" accept="application/pdf,.pdf" required>
+        <span id="dropzone-text">Hacé clic o arrastrá tu PDF acá</span>
+      </label>
+      <p class="hint">Formato PDF &middot; hasta 20&nbsp;MB</p>
+      <button type="submit" id="submit-btn">Convertir</button>
+    </form>
+
+    <p class="fineprint">No guardamos tus archivos: se procesan y se borran a la hora.</p>
+  </main>
+
+  <script>
+    const MAX_BYTES = 20 * 1024 * 1024;
+    const input = document.getElementById('pdf');
+    const dropzone = document.getElementById('dropzone');
+    const text = document.getElementById('dropzone-text');
+    const form = document.getElementById('convert-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const defaultText = text.textContent;
+
+    function formatSize(bytes) {
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function showError(msg) {
+      dropzone.classList.remove('has-file');
+      dropzone.classList.add('has-error');
+      text.textContent = msg;
+    }
+
+    function showFile(file) {
+      dropzone.classList.remove('has-error');
+      dropzone.classList.add('has-file');
+      text.textContent = '✓ ' + file.name + ' (' + formatSize(file.size) + ')';
+    }
+
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+      if (!file) {
+        dropzone.classList.remove('has-file', 'has-error');
+        text.textContent = defaultText;
+        return;
+      }
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        input.value = '';
+        showError('Eso no es un PDF. Probá con el archivo que te dio MercadoLibre.');
+        return;
+      }
+      if (file.size > MAX_BYTES) {
+        input.value = '';
+        showError('El archivo pesa ' + formatSize(file.size) + ', el máximo es 20 MB.');
+        return;
+      }
+      showFile(file);
+    });
+
+    form.addEventListener('submit', (e) => {
+      if (!input.files[0]) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Convirtiendo...';
+    });
+  </script>
+</body>
+</html>
