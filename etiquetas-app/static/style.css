@@ -59,6 +59,32 @@ h1 {
 
 .dropzone input { display: none; }
 
+.dropzone.has-file {
+  border-color: #16a34a;
+  border-style: solid;
+  color: #15803d;
+  background: #f0fdf4;
+}
+
+.dropzone.has-error {
+  border-color: #dc2626;
+  border-style: solid;
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: -10px 0 16px;
+  text-align: center;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
 button, .button {
   display: inline-block;
   background: var(--accent);
