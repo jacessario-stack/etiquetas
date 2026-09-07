@@ -87,6 +87,12 @@ def do_convert():
     )
 
 
+@app.errorhandler(413)
+def too_large(e):
+    flash("El archivo pesa más de 20 MB. Revisá que sea el PDF de etiquetas y no otra cosa.")
+    return redirect(url_for("index")), 413
+
+
 @app.route("/download/<job_id>")
 def download(job_id):
     # job_id es un uuid hex generado por nosotros -> no hay path traversal posible
