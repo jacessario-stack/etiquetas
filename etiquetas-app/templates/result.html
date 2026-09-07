@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Listo — etiquetas convertidas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <h1>&#10003; Listo</h1>
+    <p class="lead">{{ total }} etiquetas convertidas &middot; {{ codigos }} códigos distintos.</p>
+
+    <a class="button" href="{{ url_for('download', job_id=job_id) }}">Descargar PDF</a>
+
+    <details>
+      <summary>Ver detalle por código</summary>
+      <table>
+        <thead><tr><th>Código</th><th>Cantidad</th></tr></thead>
+        <tbody>
+          {% for codigo, cantidad in detalle %}
+          <tr><td>{{ codigo }}</td><td>{{ cantidad }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </details>
+
+    <p><a href="{{ url_for('index') }}">&larr; Convertir otro PDF</a></p>
+  </main>
+</body>
+</html>
